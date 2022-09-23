@@ -1,5 +1,5 @@
 import os
-from urllib import response
+from urllib.parse import urlsplit
 
 import requests
 
@@ -17,14 +17,35 @@ def download_spacex_image(url, folder):
         file.write(response.content)
 
 
-def download_nasa_image(url, folder, payload):
+def download_nasa_image(books_folder, url, payload):
     response = requests.get(url, params=payload)
     response.raise_for_status()
+    
+    x = 1
 
-    response = requests.get(response.json()['url'])
-    response.raise_for_status()
-    with open(folder, 'wb') as file:
-        file.write(response.content)
+    for i in response.json():
+
+        response = requests.get(i['url'])
+        get_split(response.url)
+        response.raise_for_status()
+        extension = get_split(response.url)
+
+        print(i['url'])
+
+        filename = f'{books_folder}{os.sep}nasa{x}{extension}'
+
+        with open(filename, 'wb') as file:
+            file.write(response.content)
+
+        x += 1
+
+def get_split(url):
+    url = urlsplit(url)
+    image_folder, image_name = os.path.split(url.path)
+    image, image_extension = os.path.splitext(image_name)
+    print(image_extension)
+    
+    return image_extension
 
 
 def main():
@@ -44,19 +65,21 @@ def main():
     nasa_key = os.environ.get('NASA_KEY')
     nasa_url = 'https://api.nasa.gov/planetary/apod'
     payload = {
-        'api_key': nasa_key
+        'api_key': nasa_key,
+        'count': 30
     }
+    download_nasa_image(books_folder, nasa_url, payload)
 
-    filename = f'{books_folder}{os.sep}nasa.jpeg'
+    for link in links:
+        response = requests.get(link)
+        response.raise_for_status()
 
-    download_nasa_image(nasa_url, filename, payload)
+        extension = get_split(response.url)
 
-    # for link in links:
+        filename = f'{books_folder}{os.sep}spacex_{image_count}{extension}'
+        download_spacex_image(link, filename)
 
-    #     filename = f'{books_folder}{os.sep}spacex_{image_count}.jpeg'
-    #     download_spacex_image(link, filename)
-
-    #     image_count += 1
+        image_count += 1
 
 
 if __name__ == '__main__':
