@@ -13,7 +13,9 @@ def main():
 
     chat_id = '@cosmo_sp'
 
-    bot.send_message(chat_id=chat_id, text="suck cock please")
+    bot.send_message(chat_id=chat_id, text="HELLO BITHES")
+
+    bot.send_document(chat_id=chat_id, document=open('images/qqq.jpg', 'rb'))
 
 
 if __name__ == '__main__':
