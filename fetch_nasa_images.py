@@ -18,7 +18,7 @@ def main():
     os.makedirs(images_folder, exist_ok=True)
 
     load_dotenv()
-    nasa_key = os.environ.get('NASA_KEY')
+    nasa_key = os.environ.get('NASA_TOKEN')
 
     payload = {
         'api_key': nasa_key,
