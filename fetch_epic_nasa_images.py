@@ -25,7 +25,6 @@ def main():
 
     nasa_key = os.environ.get('NASA_TOKEN')
 
-
     payload = {
         'api_key': nasa_key
     }

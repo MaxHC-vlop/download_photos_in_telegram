@@ -10,16 +10,14 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
+SLEEP_TIME = 14400
+
+
 def get_user_args():
-
-    sleep_time = os.environ.get('SLEEP_TIME')
-
     parser = argparse.ArgumentParser(
-        description='Delay time for sending messages'
+        description='Delay time for sending messages and choosing a photo'
     )
-    parser.add_argument('--sleep_time', default=sleep_time, type=int,
-        help='Delay time'
-    )
+    parser.add_argument('--image', default=None, help='photo to post')
 
     args = parser.parse_args()
 
@@ -38,14 +36,20 @@ def main():
         telegram_chat_id = os.environ.get('TELEGRAM_CHAT_ID')
 
         bot = telegram.Bot(token=telegram_token)
-        
-        for image in images:
 
-            bot.send_document(chat_id=telegram_chat_id, 
-                document=open(f'images/{image}', 'rb')
-                )
+        if args.image:
+            post_image = args.image
 
-            sleep(args.sleep_time)
+        else:
+            for image in images:
+                post_image = image
+
+        bot.send_document(
+            chat_id=telegram_chat_id,
+            document=open(f'images/{post_image}', 'rb')
+        )
+
+        sleep(SLEEP_TIME)
 
 
 if __name__ == '__main__':
