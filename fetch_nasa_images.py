@@ -28,7 +28,12 @@ def main():
     response = requests.get(NASA_URL, params=payload)
     response.raise_for_status()
 
-    nasa_links = [link['url'] for link in response.json()]
+    nasa_links = []
+
+    for link in response.json():
+        media_type = 'image'
+        if link['media_type'] == media_type:
+            nasa_links.append(link['url'])
 
     for number, link in enumerate(nasa_links):
         response = requests.get(link)
