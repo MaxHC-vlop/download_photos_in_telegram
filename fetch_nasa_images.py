@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 
 
 NASA_URL = 'https://api.nasa.gov/planetary/apod/'
+COUNT_IMAGES = 30
 
 
 def main():
@@ -20,9 +21,11 @@ def main():
     load_dotenv()
     nasa_key = os.environ.get('NASA_TOKEN')
 
+    count = COUNT_IMAGES
+
     payload = {
         'api_key': nasa_key,
-        'count': 30
+        'count': count
     }
 
     response = requests.get(NASA_URL, params=payload)
