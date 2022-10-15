@@ -32,8 +32,8 @@ def main():
 
         shuffle(images)
 
-        telegram_token = os.environ.get('TELEGRAM_TOKEN')
-        telegram_chat_id = os.environ.get('TELEGRAM_CHAT_ID')
+        telegram_token = os.environ['TELEGRAM_TOKEN']
+        telegram_chat_id = os.environ['TELEGRAM_CHAT_ID']
 
         bot = telegram.Bot(token=telegram_token)
 

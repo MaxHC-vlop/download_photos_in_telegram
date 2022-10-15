@@ -23,7 +23,7 @@ def main():
 
     os.makedirs(images_folder, exist_ok=True)
 
-    nasa_key = os.environ.get('NASA_TOKEN')
+    nasa_key = os.environ['NASA_TOKEN']
 
     payload = {
         'api_key': nasa_key

@@ -19,7 +19,7 @@ def main():
     os.makedirs(images_folder, exist_ok=True)
 
     load_dotenv()
-    nasa_key = os.environ.get('NASA_TOKEN')
+    nasa_key = os.environ['NASA_TOKEN']
 
     count = COUNT_IMAGES
 
