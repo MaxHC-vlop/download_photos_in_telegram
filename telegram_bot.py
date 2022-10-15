@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-SLEEP_TIME = 14400
+SLEEP_TIME = 3
 
 
 def get_user_args():
@@ -27,29 +27,30 @@ def get_user_args():
 def main():
     args = get_user_args()
 
-    while True:
-        images = os.listdir(path=f"images{os.sep}")
+    images_folder = os.path.join('images')
 
-        shuffle(images)
+    os.makedirs(images_folder, exist_ok=True)
 
-        telegram_token = os.environ['TELEGRAM_TOKEN']
-        telegram_chat_id = os.environ['TELEGRAM_CHAT_ID']
+    images = os.listdir(path=images_folder)
 
-        bot = telegram.Bot(token=telegram_token)
+    shuffle(images)
 
-        if args.image:
-            post_image = args.image
+    telegram_token = os.environ['TELEGRAM_TOKEN']
 
-        else:
-            for image in images:
-                post_image = image
+    telegram_chat_id = os.environ['TELEGRAM_CHAT_ID']
 
-        bot.send_document(
-            chat_id=telegram_chat_id,
-            document=open(f'images{os.sep}{post_image}', 'rb')
-        )
+    bot = telegram.Bot(token=telegram_token)
 
-        sleep(SLEEP_TIME)
+    for image in images:
+        img = os.path.join('images', image)
+
+        with open(img, 'rb') as file:
+            bot.send_document(
+                chat_id=telegram_chat_id,
+                document=file
+            )
+
+            sleep(SLEEP_TIME)
 
 
 if __name__ == '__main__':

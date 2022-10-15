@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 
 
 NASA_URL = 'https://api.nasa.gov/planetary/apod/'
-COUNT_IMAGES = 30
+COUNT_IMAGES = 4
 
 
 def main():
