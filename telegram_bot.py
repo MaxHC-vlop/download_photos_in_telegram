@@ -28,7 +28,7 @@ def main():
     args = get_user_args()
 
     while True:
-        images = os.listdir(path="images/")
+        images = os.listdir(path=f"images{os.sep}")
 
         shuffle(images)
 
@@ -46,7 +46,7 @@ def main():
 
         bot.send_document(
             chat_id=telegram_chat_id,
-            document=open(f'images/{post_image}', 'rb')
+            document=open(f'images{os.sep}{post_image}', 'rb')
         )
 
         sleep(SLEEP_TIME)
