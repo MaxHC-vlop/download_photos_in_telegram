@@ -3,7 +3,7 @@ import argparse
 import logging
 
 from time import sleep
-from random import shuffle
+from random import shuffle, choice
 
 import telegram
 
@@ -43,17 +43,22 @@ def main():
     try:
         bot = telegram.Bot(token=telegram_token)
 
+        image = os.path.join('images', choice(images))
+
+        if args.image:
+            image = os.path.join('images', args.image)
+
+        with open(image, 'rb') as file:
+            bot.send_document(telegram_chat_id, file)
+
         for image in images:
             img = os.path.join('images', image)
 
             with open(img, 'rb') as file:
-                bot.send_document(
-                    chat_id=telegram_chat_id,
-                    document=file
-                )
+                bot.send_document(telegram_chat_id, file)
 
                 sleep(SLEEP_TIME)
-                
+
     except telegram.error.NetworkError as errn:
         logging.exception(f"NetworkError: {errn}")
         sleep(10)
