@@ -8,7 +8,6 @@ from random import shuffle, choice
 import telegram
 
 from dotenv import load_dotenv
-load_dotenv()
 
 
 SLEEP_TIME = 3
@@ -28,6 +27,7 @@ def get_user_args():
 def main():
     args = get_user_args()
 
+
     images_folder = os.path.join('images')
 
     os.makedirs(images_folder, exist_ok=True)
@@ -36,6 +36,7 @@ def main():
 
     shuffle(images)
 
+    load_dotenv()
     telegram_token = os.environ['TELEGRAM_TOKEN']
 
     telegram_chat_id = os.environ['TELEGRAM_CHAT_ID']
