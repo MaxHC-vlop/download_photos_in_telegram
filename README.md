@@ -43,6 +43,9 @@ TELEGRAM_CHAT_ID='your_chat_id (@your_chat)'
 # Download image spaceX
 python3 fetch_spacex_images.py
 
-# Post images chat
-telegram_bot.py
+# Download image nasa
+python3 fetch_nasa_images.py
+
+# Post your image in the chat and post all the photos
+python3 telegram_bot.py --image your_photo
 ```

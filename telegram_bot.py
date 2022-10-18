@@ -27,7 +27,6 @@ def get_user_args():
 def main():
     args = get_user_args()
 
-
     images_folder = os.path.join('images')
 
     os.makedirs(images_folder, exist_ok=True)
