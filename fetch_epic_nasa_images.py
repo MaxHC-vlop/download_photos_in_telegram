@@ -8,7 +8,6 @@ from download_image import download_image
 import requests
 
 from dotenv import load_dotenv
-load_dotenv()
 
 
 EPIC_NASA_URL = 'https://api.nasa.gov/EPIC/api/natural/'
@@ -23,6 +22,7 @@ def main():
 
     os.makedirs(images_folder, exist_ok=True)
 
+    load_dotenv()
     nasa_key = os.environ['NASA_TOKEN']
 
     payload = {
