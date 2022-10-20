@@ -17,7 +17,7 @@ def get_user_args():
     )
     parser.add_argument(
         '--count', default=1,
-        help='ID spacex API',
+        help='Count images',
         type=int
     )
 

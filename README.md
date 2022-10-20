@@ -32,10 +32,13 @@ TELEGRAM_CHAT_ID='your_chat_id (@your_chat)'
 
 ## Arguments
 - telegram_bot.py:
-  - `--image` - specify what picture to throw in the chat (default None)
+  - `--image` - specify what picture to throw in the chat (default `None`)
 
-- fetch_spacex_images.py
+- fetch_spacex_images.py:
   - `--spacex_id` - specify run ID (default last run)
+
+- fetch_nasa_images.py:
+  - `--count` - count images (default `1`)
 
 ### Example
 - Download pictures and post them in telegram chat :
@@ -43,8 +46,8 @@ TELEGRAM_CHAT_ID='your_chat_id (@your_chat)'
 # Download image spaceX
 python3 fetch_spacex_images.py
 
-# Download image nasa
-python3 fetch_nasa_images.py
+# Download 4 images nasa
+python3 fetch_nasa_images.py --count 4
 
 # Post your image in the chat and post all the photos
 python3 telegram_bot.py --image your_photo
