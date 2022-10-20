@@ -1,4 +1,5 @@
 import os
+import argparse
 
 from download_image import get_file_format, download_image
 
@@ -8,7 +9,21 @@ from dotenv import load_dotenv
 
 
 NASA_URL = 'https://api.nasa.gov/planetary/apod/'
-COUNT_IMAGES = 4
+
+
+def get_user_args():
+    parser = argparse.ArgumentParser(
+        description='Download nasa images'
+    )
+    parser.add_argument(
+        '--count', default=1,
+        help='ID spacex API',
+        type=int
+    )
+
+    args = parser.parse_args()
+
+    return args
 
 
 def main():
@@ -21,11 +36,11 @@ def main():
     load_dotenv()
     nasa_key = os.environ['NASA_TOKEN']
 
-    count = COUNT_IMAGES
+    args = get_user_args()
 
     payload = {
         'api_key': nasa_key,
-        'count': count
+        'count': args.count
     }
 
     response = requests.get(NASA_URL, params=payload)
