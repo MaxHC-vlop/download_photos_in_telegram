@@ -10,7 +10,7 @@ import telegram
 from dotenv import load_dotenv
 
 
-SLEEP_TIME = 14400
+SLEEP_TIME = 3
 
 
 def get_user_args():
@@ -40,18 +40,18 @@ def main():
 
     telegram_chat_id = os.environ['TELEGRAM_CHAT_ID']
 
-    try:
-        bot = telegram.Bot(token=telegram_token)
 
+    bot = telegram.Bot(token=telegram_token)
+
+    while True:
         image = os.path.join('images', choice(images))
 
         if args.image:
             image = os.path.join('images', args.image)
+        try:
+            with open(image, 'rb') as file:
+                bot.send_document(telegram_chat_id, file)
 
-        with open(image, 'rb') as file:
-            bot.send_document(telegram_chat_id, file)
-
-        while True:
             for image in images:
                 img = os.path.join('images', image)
 
@@ -60,10 +60,10 @@ def main():
 
                     sleep(SLEEP_TIME)
 
-    except telegram.error.NetworkError as errn:
-        logging.exception(f"NetworkError: {errn}")
-        sleep(10)
-
+        except telegram.error.NetworkError as errn:
+            logging.error(f'NetworkError: {errn}')
+            sleep(10)
+            continue
 
 if __name__ == '__main__':
     main()
