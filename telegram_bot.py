@@ -15,16 +15,24 @@ SLEEP_TIME = 14400
 
 def get_user_args():
     parser = argparse.ArgumentParser(
-        description='Delay time for sending messages and choosing a photo'
+        description='Upload photos from nasa and spacex to telegram channel'
     )
-    parser.add_argument('--image', default=None, help='photo to post')
+    parser.add_argument(
+        '-a', '--all_images', action=argparse.BooleanOptionalAction, help='Submit all images'
+        )
+    parser.add_argument(
+        '-o','--one_image', action=argparse.BooleanOptionalAction, help='Submit one image'
+        )
+    parser.add_argument(
+        '-i','--image', default=None, help='Photo to post'
+        )
 
     args = parser.parse_args()
 
     return args
 
 
-def send_image(bot, chat_id, image_folder):
+def send_file(bot, chat_id, image_folder):
     with open(image_folder, 'rb') as file:
         bot.send_document(chat_id, file)
 
@@ -48,29 +56,31 @@ def main():
 
     bot = telegram.Bot(token=telegram_token)
 
-    image = os.path.join('images', choice(images))
+    if args.one_image:
+        image = os.path.join('images', choice(images))
 
-    if args.image:
-        image = os.path.join('images', args.image)
+        if args.image:
+            image = os.path.join('images', args.image)
 
-    try:
-        send_image(bot, telegram_chat_id, image)
-
-    except telegram.error.NetworkError as errn:
-        logging.error(f'NetworkError: {errn}')
-        sleep(10)
-
-    while True:
         try:
-            for image in images:
-                image_folder = os.path.join('images', image)
-                send_image(bot, telegram_chat_id, image_folder)
-                sleep(SLEEP_TIME)
+            send_file(bot, telegram_chat_id, image)
 
         except telegram.error.NetworkError as errn:
             logging.error(f'NetworkError: {errn}')
             sleep(10)
-            continue
+
+    if args.all_images:
+        while True:
+            try:
+                for image in images:
+                    image_folder = os.path.join('images', image)
+                    send_file(bot, telegram_chat_id, image_folder)
+                    sleep(SLEEP_TIME)
+
+            except telegram.error.NetworkError as errn:
+                logging.error(f'NetworkError: {errn}')
+                sleep(10)
+                continue
 
 if __name__ == '__main__':
     main()
