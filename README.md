@@ -8,8 +8,10 @@ Modules download space photos and upload them to Telegram.
 ```bash
 git@github.com:MaxHC-vlop/download_photos_in_telegram.git
 ```
- - Create a virtual environment on directory project:
- ```bash
+- You must have python3.9 (or higher) installed.
+
+- Create a virtual environment on directory project:
+```bash
 python3 -m venv env
  ```
 - Start the virtual environment:
