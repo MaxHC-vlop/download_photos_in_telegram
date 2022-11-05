@@ -62,12 +62,7 @@ def main():
         if args.image:
             image = os.path.join('images', args.image)
 
-        try:
-            send_file(bot, telegram_chat_id, image)
-
-        except telegram.error.NetworkError as errn:
-            logging.error(f'NetworkError: {errn}')
-            sleep(10)
+        send_file(bot, telegram_chat_id, image)
 
     if args.all_images:
         while True:
